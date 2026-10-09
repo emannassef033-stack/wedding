@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة زفاف - شهد ومحمد</title>
+    <!-- خطوط عربية أنيقة -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600&family=Reem+Kufi:wght@500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 50%, #ffc0cb 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+            color: #5c3a42;
+            position: relative;
+        }
+
+        /* خلفية الورود المتساقطة */
+        .bg-roses {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .rose-petal {
+            position: absolute;
+            display: block;
+            background: rgba(255, 182, 193, 0.6);
+            border-radius: 50% 0 50% 50%;
+            animation: fall linear infinite;
+            bottom: -50px;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg) scale(0.8); opacity: 0; }
+        }
+
+        /* حاوية الظرف الأساسية */
+        .envelope-container {
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+            text-align: center;
+        }
+
+        .envelope-container:hover {
+            transform: scale(1.03);
+        }
+
+        /* شكل الظرف المطور الفاخر */
+        .envelope {
+            width: 380px;
+            height: 260px;
+            background: #ffffff;
+            border-radius: 16px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(219, 112, 147, 0.25), 0 0 30px rgba(212, 175, 55, 0.4);
+            border: 3px solid #d4af37;
+            overflow: hidden;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 140px;
+            background: #fff5f8;
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5;
+            border-bottom: 2px solid #d4af37;
+        }
+
+        .envelope-text {
+            position: absolute;
+            bottom: 45px;
+            width: 100%;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .envelope-text h2 {
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem;
+            color: #b8860b;
+        }
+
+        .envelope-text p {
+            font-size: 0.95rem;
+            color: #88606d;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        /* بطاقة الدعوة الرئيسية */
+        .invitation-card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 92%;
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(15px);
+            border: 3px solid #d4af37;
+            border-radius: 24px;
+            padding: 35px 25px;
+            box-shadow: 0 30px 70px rgba(219, 112, 147, 0.3), 0 0 40px rgba(212, 175, 55, 0.3);
+            z-index: 20;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            max-height: 92vh;
+            overflow-y: auto;
+        }
+
+        .invitation-card.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .bismillah {
+            font-family: 'Amiri', serif;
+            font-size: 1.4rem;
+            color: #b8860b;
+            margin-bottom: 10px;
+        }
+
+        .invitation-title {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 2.2rem;
+            color: #d4af37;
+            margin-bottom: 8px;
+        }
+
+        .opening-phrase {
+            font-size: 1rem;
+            color: #6b4c55;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        /* أسماء العروسين */
+        .couple-names {
+            font-family: 'Amiri', serif;
+            font-size: 2.6rem;
+            color: #db7093;
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .couple-names span {
+            color: #d4af37;
+            font-size: 2rem;
+        }
+
+        /* معرض صور العروسين */
+        .photo-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .photo-frame {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #d4af37;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(219, 112, 147, 0.3);
+            background: #fff0f5;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* تقويم شهر أكتوبر مع تمييز يوم 16 بقلب */
+        .calendar-section {
+            background: #fff5f8;
+            border: 1.5px solid #ffb6c1;
+            padding: 15px;
+            border-radius: 16px;
+            margin: 20px 0;
+        }
+
+        .calendar-title {
+            font-family: 'Reem Kufi', sans-serif;
+            color: #b8860b;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            font-size: 0.85rem;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .calendar-grid div {
+            padding: 6px;
+            text-align: center;
+            border-radius: 6px;
+            color: #5c3a42;
+        }
+
+        .calendar-grid .day-name {
+            font-weight: bold;
+            color: #db7093;
+        }
+
+        .highlight-day {
+            background: #db7093;
+            color: #fff !important;
+            font-weight: bold;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(219, 112, 147, 0.5);
+        }
+        
+        .highlight-day::after {
+            content: '💖';
+            position: absolute;
+            font-size: 10px;
+            top: -2px;
+            right: 2px;
+        }
+
+        /* قسم العنوان */
+        .venue-section {
+            background: #fff8fb;
+            border: 1px dashed #d4af37;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .venue-section h3 {
+            color: #b8860b;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            font-family: 'Reem Kufi', sans-serif;
+        }
+
+        .venue-section p {
+            color: #6b4c55;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* فورم كتابة تهنئة للعروسين */
+        .wishes-section {
+            background: #fff5f8;
+            border: 1.5px solid #ffb6c1;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 20px 0;
+            text-align: right;
+        }
+
+        .wishes-section h3 {
+            color: #b8860b;
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .wishes-form input, .wishes-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ffb6c1;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            background: #fff;
+            color: #5c3a42;
+        }
+
+        .wishes-form button {
+            background: #db7093;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: bold;
+            transition: background 0.3s;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .wishes-form button:hover {
+            background: #c85a7c;
+        }
+
+        .wishes-list {
+            margin-top: 15px;
+            max-height: 150px;
+            overflow-y: auto;
+            text-align: right;
+        }
+
+        .wish-item {
+            background: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            border-right: 3px solid #db7093;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .wish-item strong {
+            color: #db7093;
+        }
+
+        /* قسم صور ما بعد الفرح */
+        .post-wedding-section {
+            background: #fff8fb;
+            border: 1px dashed #db7093;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .post-wedding-section h3 {
+            color: #b8860b;
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .upload-box {
+            margin-top: 10px;
+        }
+
+        .upload-box input[type="file"] {
+            font-size: 0.85rem;
+            color: #6b4c55;
+            margin-bottom: 10px;
+        }
+
+        .submit-media-btn {
+            background: #25d366;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: bold;
+            margin-top: 8px;
+            transition: background 0.3s;
+        }
+
+        .submit-media-btn:hover {
+            background: #1ebe5d;
+        }
+
+        .uploaded-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .uploaded-gallery img, .uploaded-gallery video {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #d4af37;
+        }
+
+        /* أزرار التحكم بالموسيقى */
+        .audio-control {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .music-btn {
+            background: transparent;
+            border: 1.5px solid #db7093;
+            color: #db7093;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .music-btn:hover {
+            background: #db7093;
+            color: #fff;
+        }
+
+        .envelope-container.hide {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- خلفية الورود المتساقطة -->
+    <div class="bg-roses" id="bgRoses"></div>
+
+    <!-- عنصر الصوت -->
+    <audio id="weddingMusic" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=romantic-wedding-112177.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- الظرف التفاعلي المطور -->
+    <div class="envelope-container" id="envelopeContainer" onclick="openEnvelope()">
+        
+        <div class="envelope">
+            <div class="envelope-flap" id="envelopeFlap"></div>
+            <div class="envelope-text">
+                <h2></h2>
+                <p>اضغط هنا لفتح الدعوة</p>
+            </div>
+            
+        </div>
+        
+    </div>
+
+    <!-- بطاقة الدعوة الرئيسية -->
+    <div class="invitation-card" id="invitationCard">
+        <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        <h1 class="invitation-title">ليلة عمرنا</h1>
+        <p class="opening-phrase">
+             في ليلة من ليالي العمر، وبقلوب يملؤها الحب والفرح، تكتمل سعادتنا بحضوركم وتشريفكم لنا لنحتفل معاً بمراسيم زفافنا.
+        </p>
+
+        <!-- معرض صور العروسين -->
+        <div class="photo-gallery">
+            <div class="photo-frame">
+                <img src="SHHHH.jpeg" alt="العروس شهد" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'">
+            </div>
+        </div>
+
+        <!-- أسماء العروسين -->
+        <div class="couple-names">
+            محمد
+            <span>&</span>
+            شهد
+        </div>
+        
+
+        <!-- جدول شهر أكتوبر مع تمييز يوم 16 بقلب -->
+        <div class="calendar-section">
+            <div class="calendar-title">📅 أكتوبر 2026  </div>
+            <div class="calendar-grid">
+                <div class="day-name">ست</div>
+                <div class="day-name">أح</div>
+                <div class="day-name">اث</div>
+                <div class="day-name">ثل</div>
+                <div class="day-name">أر</div>
+                <div class="day-name">خم</div>
+                <div class="day-name">جم</div>
+                
+                <div></div><div></div><div></div><div></div><div>1</div><div>2</div><div>3</div>
+                <div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div>
+                <div>11</div><div>12</div><div>13</div><div>14</div><div>15</div>
+                <div class="highlight-day">16</div>
+                <div>17</div>
+                <div>18</div><div>19</div><div>20</div><div>21</div><div>22</div><div>23</div><div>24</div>
+                <div>25</div><div>26</div><div>27</div><div>28</div><div>29</div><div>30</div><div>31</div>
+            </div>
+        </div>
+
+        <!-- منطقة المكان -->
+        <div class="venue-section">
+            <h3>📍 تفاصيل الحفل</h3>
+            <p>اتريس<br>الجمعة 16 أكتوبر 2026</p>
+        </div>
+
+        <!-- فورم تهنئة العروسين -->
+        <div class="wishes-section">
+            <h3>💌 أرسل تهنئة للعروسين</h3>
+            <div class="wishes-form">
+                <input type="text" id="senderName" placeholder="اسمك..." required>
+                <textarea id="senderWish" rows="2" placeholder="اكتب رسالتك للعروسين..." required></textarea>
+                <button type="button" onclick="addWish()">إرسال التهنئة</button>
+            </div>
+            <div class="wishes-list" id="wishesList"></div>
+        </div>
+
+        <!-- خانة إضافة وصور وفيديوهات ما بعد الفرح -->
+        <div class="post-wedding-section">
+            <h3>📸 ذكريات ما بعد الفرح</h3>
+            <p style="font-size: 0.85rem; color: #6b4c55; margin-bottom: 8px;">شاركنا صورك أو فيديوهاتك الخاصة واضغط تأكيد لتظهر للجميع:</p>
+            <div class="upload-box">
+                <input type="file" id="mediaUpload" accept="image/*,video/*" multiple>
+                <br>
+                <button type="button" class="submit-media-btn" onclick="uploadMedia()">✔️ تأكيد وإرسال الصور/الفيديوهات للجميع</button>
+            </div>
+            <div class="uploaded-gallery" id="uploadedGallery"></div>
+        </div>
+
+        <div style="margin: 20px 0; text-align: center;">
+    <h3 style="font-family: 'Reem Kufi', sans-serif; color: #fffffe; font-size: 1.1rem; margin-bottom: 8px;">🎵  </h3>
+    <iframe style="border-radius:16px; box-shadow: 0 4px 15px rgba(252, 12, 92, 0.2);" src="https://open.spotify.com/embed/album/5Fz2kCmYaHsPSmWfbfBye5?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+
+        
+        
+    </div>
+
+    <script>
+        // توليد ورود متساقطة في الخلفية
+        const bgRoses = document.getElementById('bgRoses');
+        for (let i = 0; i < 20; i++) {
+            const petal = document.createElement('span');
+            petal.classList.add('rose-petal');
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.width = (Math.random() * 12 + 10) + 'px';
+            petal.style.height = (Math.random() * 18 + 12) + 'px';
+            petal.style.animationDuration = (Math.random() * 8 + 7) + 's';
+            petal.style.animationDelay = (Math.random() * 5) + 's';
+            bgRoses.appendChild(petal);
+        }
+
+        let isMusicPlaying = false;
+        const music = document.getElementById('weddingMusic');
+        const musicBtn = document.getElementById('musicBtn');
+
+        function openEnvelope() {
+            document.getElementById('envelopeFlap').style.transform = 'rotateX(180deg)';
+            
+            music.play().then(() => {
+                isMusicPlaying = true;
+                musicBtn.textContent = "🔇 إيقاف الموسيقى";
+            }).catch(e => {
+                console.log("Autoplay prevented:", e);
+            });
+
+            setTimeout(() => {
+                document.getElementById('envelopeContainer').classList.add('hide');
+                document.getElementById('invitationCard').classList.add('active');
+            }, 600);
+        }
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                music.pause();
+                isMusicPlaying = false;
+                musicBtn.textContent = "🔊 تشغيل الموسيقى";
+            } else {
+                music.play();
+                isMusicPlaying = true;
+                musicBtn.textContent = "🔇 إيقاف الموسيقى";
+            }
+        }
+
+        // --- نظام حفظ واسترجاع التهاني والصور للجميع عبر LocalStorage ---
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            loadWishes();
+            loadMedia();
+        });
+
+        function addWish() {
+            const nameInput = document.getElementById('senderName');
+            const wishInput = document.getElementById('senderWish');
+
+            if (nameInput.value.trim() === '' || wishInput.value.trim() === '') {
+                alert('الرجاء ادخال الاسم وكتابة رسالة التهنئة.');
+                return;
+            }
+
+            const newWish = {
+                name: nameInput.value.trim(),
+                text: wishInput.value.trim(),
+                date: new Date().toLocaleDateString('ar-EG')
+            };
+
+            let wishes = JSON.parse(localStorage.getItem('wedding_wishes')) || [];
+            wishes.unshift(newWish); // إضافة التهنئة في البداية
+            localStorage.setItem('wedding_wishes', JSON.stringify(wishes));
+
+            nameInput.value = '';
+            wishInput.value = '';
+            loadWishes();
+        }
+
+        function loadWishes() {
+            const wishesList = document.getElementById('wishesList');
+            wishesList.innerHTML = '';
+            let wishes = JSON.parse(localStorage.getItem('wedding_wishes')) || [];
+
+            wishes.forEach(wish => {
+                const newItem = document.createElement('div');
+                newItem.classList.add('wish-item');
+                newItem.innerHTML = `<strong>${escapeHtml(wish.name)}:</strong> ${escapeHtml(wish.text)}`;
+                wishesList.appendChild(newItem);
+            });
+        }
+
+        function uploadMedia() {
+            const fileInput = document.getElementById('mediaUpload');
+            const files = fileInput.files;
+
+            if (files.length === 0) {
+                alert('الرجاء اختيار صورة أو فيديو أولاً.');
+                return;
+            }
+
+            let savedMedia = JSON.parse(localStorage.getItem('wedding_media')) || [];
+            let processedCount = 0;
+            for (let i = 0; i < files.length; i++) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    savedMedia.push({
+                        type: files[i].type.startsWith('video') ? 'video' : 'image',
+                        data: e.target.result
+                    });
+                    processedCount++;
+
+                    if (processedCount === files.length) {
+                        localStorage.setItem('wedding_media', JSON.stringify(savedMedia));
+                        fileInput.value = '';
+                        loadMedia();
+                        alert('تم رفع وتأكيد ظهور الصور والفيديوهات للجميع بنجاح!');
+                    }
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        }
+
+        function loadMedia() {
+            const gallery = document.getElementById('uploadedGallery');
+            gallery.innerHTML = '';
+            let savedMedia = JSON.parse(localStorage.getItem('wedding_media')) || [];
+
+            savedMedia.forEach(item => {
+                if (item.type === 'video') {
+                    const video = document.createElement('video');
+                    video.src = item.data;
+                    video.controls = true;
+                    gallery.appendChild(video);
+                } else {
+                    const img = document.createElement('img');
+                    img.src = item.data;
+                    gallery.appendChild(img);
+                }
+            });
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
+</body>
+</html>
